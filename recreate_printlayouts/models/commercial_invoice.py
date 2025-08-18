@@ -131,7 +131,7 @@ class CommercialInvoiceXlsx(models.AbstractModel):
             messr_record = moves.partner_id.parent_id if moves.partner_id.parent_id else moves.partner_id
             sheet.write("D14", messr_record.name, document_info_value_format)
             sheet.write("D15", messr_record.contact_address_complete, document_info_value_format)
-            fax_string = str(f'FAX: {moves.partner_id.fax_number if moves.partner_id.fax_number else ''}')
+            fax_string = str(f"FAX: {moves.partner_id.fax_number if moves.partner_id.fax_number else ''}")
             phone_string = str(f'TEL: {moves.partner_id.phone}')
             sheet.write("D16", phone_string, document_info_value_format)
             sheet.write("D17", fax_string, document_info_value_format)
