@@ -126,7 +126,7 @@ class CommercialInvoiceXlsx(models.AbstractModel):
             sheet.write("M14", moves.name, document_info_value_format)
             sheet.write("M15", moves.invoice_date.strftime("%Y-%m-%d"), document_info_value_format)
             sheet.write("M16", moves.partner_id.name, document_info_value_format)
-            sheet.write("M17", moves.pi_number, document_info_value_format)
+            sheet.write("M17", moves.pi_number if moves.pi_number else None, document_info_value_format)
             sheet.write("D22", moves.user_id.name, document_info_value_format)
             messr_record = moves.partner_id.parent_id if moves.partner_id.parent_id else moves.partner_id
             sheet.write("D14", messr_record.name, document_info_value_format)
