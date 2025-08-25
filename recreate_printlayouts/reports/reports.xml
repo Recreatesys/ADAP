@@ -19,4 +19,14 @@
         <field name="print_report_name">'Adap Packing List'</field>
         <field name="binding_model_id" ref="stock.model_stock_picking"/>
     </record>
+
+    <record id="action_adap_beneficiary_cert" model="ir.actions.report">
+        <field name="name">Adap Beneficiary Certificate</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">recreate_printlayouts.report_adap_beneficiary_cert</field>
+        <field name="report_file">recreate_printlayouts.report_adap_beneficiary_cert</field>
+        <field name="print_report_name">'Adap Beneficiary Certificate'</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+    </record>
 </odoo>

@@ -11,6 +11,11 @@
                     <field name="fax_number"/>
                 </xpath>
 
+                <xpath expr="//field[@name='vat']" position="after">
+                    <field name="irc_number"/>
+                    <field name="tin_number"/>
+                </xpath>
+
             </field>
         </record>
     </data>

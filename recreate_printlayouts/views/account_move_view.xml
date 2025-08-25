@@ -11,14 +11,17 @@
                     <field name="remarks"/>
                 </xpath>
 
-                <xpath expr="//page[@name='other_info']/group" position="inside">
-                    <group string="Shipping">
-                        <field name="trade_terms"/>
-                        <field name="port_of_loading"/>
-                        <field name="country_of_origin"/>
-                        <field name="net_weight"/>
-                        <field name="gross_weight"/>
-                    </group>
+                <xpath expr="//page[@name='other_info']" position="before">
+                    <page string="Trade Terms" name="trade_terms">
+                        <group>
+                            <field name="total_value"/>
+                            <field name="trade_term"/>
+                            <field name="port_of_loading"/>
+                            <field name="country_of_origin"/>
+                            <field name="net_weight"/>
+                            <field name="gross_weight"/>
+                        </group>
+                    </page>
                 </xpath>
 
                 <xpath expr="//field[@name='partner_shipping_id']" position="before">

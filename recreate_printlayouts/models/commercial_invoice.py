@@ -171,14 +171,36 @@ class CommercialInvoiceXlsx(models.AbstractModel):
 
             # Trading Terms
             sheet.write(row, 1, "TRADING TERMS:", bottom_text_format)
-            sheet.write(row, 4, moves.trade_terms, document_end_text_format)
+            sheet.write(row, 4, str(f'TOTAL VALUE: {moves.currency_id.name} {moves.total_value if moves.total_value else ''}'), bottom_text_format)
             row += 1
-            sheet.write(row, 4, "COUNTRY OF ORIGIN:", document_end_text_format)
-            if moves.country_of_origin:
-                sheet.write(row, 7, moves.country_of_origin.name, document_end_text_format)
+
+            sheet.write(row, 4, str(f'TRADE TERM: {moves.trade_term if moves.trade_term else ''}'), bottom_text_format)
             row += 1
-            sheet.write(row, 4, "PORT OF LOADING:", document_end_text_format)
-            sheet.write(row, 7, moves.port_of_loading, document_end_text_format)
+
+            sheet.write(row, 4, "ALL OTHER DETAILS AS PER BENEFICIARY'S SALES CONTRACT/PROFORMA", bottom_text_format)
+            row += 1
+
+            if moves.invoice_origin:
+                invoice_origins = moves.invoice_origin.split('-')
+                record_list = [self.env["sale.order"].search([('name', '=', name)]) for name in invoice_origins]
+                origin_list_str = [f'{sale_record.name} DATED {sale_record.date_order.strftime("%Y.%m.%d")}' for sale_record in record_list]
+                sheet.write(row, 4, str(f"INVOICE NO. {','.join(origin_list_str)} WHICH MUST APPEAR IN COMMERCIAL INVOICE."), bottom_text_format)
+                row += 1
+
+            sheet.write(row, 4, str(f"COUNTRY OF ORIGIN: {moves.country_of_origin.name if moves.country_of_origin else ''}"), document_end_text_format)
+            row += 1
+
+            sheet.write(row, 4, f"PORT OF LOADING: {moves.port_of_loading if moves.port_of_loading else ''}", document_end_text_format)
+            row += 1
+
+            hs_code_list = [line.product_id.hs_code for line in moves.line_ids if line.product_id and line.product_id.hs_code]
+            sheet.write(row, 4, str(f"H.S.CODE {','.join(hs_code_list)}"), document_end_text_format)
+            row += 1
+
+            sheet.write(row, 4, "IMPORT UNDER BONDED WAREHOUSE", document_end_text_format)
+            row += 1
+
+            sheet.write(row, 4, "WE CERTIFY THAT COUNTRY OF ORIGIN HAVE BEEN CLEARLY MENTIONED ON EACH PACKAGE/CARTON/BAG/CONTAINER.", document_end_text_format)
             row += 2
 
             # Packing
@@ -205,7 +227,7 @@ class CommercialInvoiceXlsx(models.AbstractModel):
 
             # Remarks
             sheet.write(row, 1, "REMARKS:", bottom_text_format)
-            sheet.write(row, 4, moves.remarks, document_end_text_format)
+            sheet.write(row, 4, moves.remarks if moves.remarks else '', document_end_text_format)
             row += 8
 
             # For and On Behalf
