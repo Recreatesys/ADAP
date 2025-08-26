@@ -7,4 +7,5 @@ class ResPartner(models.Model):
     fax_number = fields.Char(string="Fax Number")
     irc_number = fields.Char(string="IRC No.")
     tin_number = fields.Char(string="TIN")
+    
 
