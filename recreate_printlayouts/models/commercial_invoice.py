@@ -131,7 +131,7 @@ class CommercialInvoiceXlsx(models.AbstractModel):
             messr_record = moves.partner_id.parent_id if moves.partner_id.parent_id else moves.partner_id
             sheet.write("D14", messr_record.name, document_info_value_format)
             sheet.write("D15", messr_record.contact_address_complete, document_info_value_format)
-            fax_string = str(f"FAX: {moves.partner_id.fax_number if moves.partner_id.fax_number else ''}")
+            fax_string = str(f"FAX: {moves.partner_id.x_studio_char_field_1ci_1j35oraga if moves.partner_id.x_studio_char_field_1ci_1j35oraga else ''}")
             phone_string = str(f'TEL: {moves.partner_id.phone}')
             sheet.write("D16", phone_string, document_info_value_format)
             sheet.write("D17", fax_string, document_info_value_format)
@@ -181,7 +181,7 @@ class CommercialInvoiceXlsx(models.AbstractModel):
             row += 1
 
             if moves.invoice_origin:
-                invoice_origins = moves.invoice_origin.split('-')
+                invoice_origins = moves.invoice_origin.split(',')
                 record_list = [self.env["sale.order"].search([('name', '=', name)]) for name in invoice_origins]
                 origin_list_str = [f'{sale_record.name} DATED {sale_record.date_order.strftime("%Y.%m.%d")}' for sale_record in record_list]
                 sheet.write(row, 4, str(f"INVOICE NO. {','.join(origin_list_str)} WHICH MUST APPEAR IN COMMERCIAL INVOICE."), bottom_text_format)

@@ -83,7 +83,11 @@ class BeneficiaryCertificateXlsx(models.AbstractModel):
             sheet.write("B37", "* WE CERTIFY THAT ONE COMPLETE SET OF NON NEGOTIABLE SHIPPING DOCUMENTS HAS BEEN SENT TO " \
             "APPLICANT WITHIN 10 (TEN) WORKING DAYS OF SHIPMENT THROUGH EMAIL: TAPASHEAL AT ESQUIREBD.COM", header_format)
 
-            sheet.write("B40", "L/C No. AND DATE 2352355 DATE of ISSUE 23525", main_content_label_format)
+            invoice_origins = obj.origin.split(',')
+            record_list = [self.env["sale.order"].search([('name', '=', name)]) for name in invoice_origins]
+            lc_no_ls, lc_date = [rec.lc_number for rec in record_list if rec.lc_number], [rec.lc_issue_date.strftime("%Y%m%d") for rec in record_list if rec.lc_issue_date]
+            if lc_no_ls and lc_date:
+                sheet.write("B40", f"L/C No. AND DATE {','.join(lc_no_ls)} DATE of ISSUE {','.join(lc_date)}", main_content_label_format)
             sheet.write("B42", 'Remarks:', main_content_label_format)
             sheet.write("B43", obj.remarks if obj.remarks else '', header_format)
 

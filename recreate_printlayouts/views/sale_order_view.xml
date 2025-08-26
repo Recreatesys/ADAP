@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_order_form_inherit" model="ir.ui.view">
+            <field name="name">Sale Order Form Inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="lc_number"/>
+                    <field name="lc_issue_date"/>
+                </xpath>
+
+                <xpath expr="//label[@for='commitment_date']" position="before">
+                    <field name="shipping_method"/>
+                    <field name="loading_port"/>
+                    <field name="country_of_origin"/>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>
