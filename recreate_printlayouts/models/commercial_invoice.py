@@ -171,10 +171,10 @@ class CommercialInvoiceXlsx(models.AbstractModel):
 
             # Trading Terms
             sheet.write(row, 1, "TRADING TERMS:", bottom_text_format)
-            sheet.write(row, 4, str(f'TOTAL VALUE: {moves.currency_id.name} {moves.total_value if moves.total_value else ''}'), bottom_text_format)
+            sheet.write(row, 4, str(f"TOTAL VALUE: {moves.currency_id.name} {moves.total_value if moves.total_value else ''}"), bottom_text_format)
             row += 1
 
-            sheet.write(row, 4, str(f'TRADE TERM: {moves.trade_term if moves.trade_term else ''}'), bottom_text_format)
+            sheet.write(row, 4, str(f"TRADE TERM: {moves.trade_term if moves.trade_term else ''}"), bottom_text_format)
             row += 1
 
             sheet.write(row, 4, "ALL OTHER DETAILS AS PER BENEFICIARY'S SALES CONTRACT/PROFORMA", bottom_text_format)
