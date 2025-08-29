@@ -8,3 +8,4 @@ from . import beneficiary_certificate
 from . import certificate
 from . import sale_order
 from . import proforma_invoice
+from . import shipping_advise

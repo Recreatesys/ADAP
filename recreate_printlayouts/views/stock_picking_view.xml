@@ -8,7 +8,9 @@
             <field name="arch" type="xml">
                 <xpath expr="//group[@name='other_infos']/field[@name='move_type']" position="after">
                     <field name="trade_terms"/>
+                    <field name="shipping_marks"/>
                     <field name="port_of_loading"/>
+                    <field name="port_of_discharge"/>
                     <field name="country_of_origin"/>
                     <field name="name_of_vessel"/>
                     <field name="voyage_number"/>
@@ -23,6 +25,13 @@
                 <xpath expr="//div[@class='o_td_label']" position="before">
                     <field name="pl_number"/>
                     <field name="pi_number"/>
+                    <field name="insurance_address"/>
+                    <field name="bank_address"/>
+                </xpath>
+
+                <xpath expr="//field[@name='origin']" position="before">
+                    <field name="container_number"/>
+                    <field name="seal_number"/>
                 </xpath>
             </field>
         </record>

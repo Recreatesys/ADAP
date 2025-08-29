@@ -8,12 +8,18 @@ class StockPicking(models.Model):
     trade_terms = fields.Char(string="Trade Terms", store=True)
     remarks = fields.Char(string="Remarks", store=True)
     port_of_loading = fields.Char(string="Port of Loading", store=True)
+    port_of_discharge = fields.Char(string="Port of Discharge", store=True)
     country_of_origin = fields.Many2one("res.country", string="Country of Origin", store=True)
     pl_number = fields.Char(string="PL No.", store=True)
     shipment_date = fields.Date(string="Shipment Date", store=True)
     name_of_vessel = fields.Char(string="Vessel Name", store=True)
     voyage_number = fields.Char(string="Voyage No.", store=True)
     bill_of_lading_number = fields.Char(string="Bill of Ladding No.", store=True)
+    insurance_address = fields.Char(string="Insurance Address", store=True)
+    bank_address = fields.Char(string="Bank Address", store=True)
+    shipping_marks = fields.Char(string="Shipping Marks", store=True)
+    container_number = fields.Char(string="Container Number", store=True)
+    seal_number = fields.Char(string="Seal Number", store=True)
 
     @api.depends("origin")
     def _compute_pi_number(self):

@@ -140,7 +140,7 @@ class PackingListXlsx(models.AbstractModel):
             sheet.write("C22", obj.user_id.name, document_info_value_format)
             sheet.write("M14", obj.pl_number, document_info_value_format)
             sheet.write("C14", obj.partner_id.contact_address_complete, document_info_value_format)
-            fax_string = str(f"FAX: {obj.partner_id.fax_number if obj.partner_id.fax_number else ''}")
+            fax_string = str(f"FAX: {obj.partner_id.x_studio_char_field_1ci_1j35oraga if obj.partner_id.x_studio_char_field_1ci_1j35oraga else ''}")
             phone_string = str(f'TEL: {obj.partner_id.phone}')
             sheet.write("C16", phone_string, document_info_value_format)
             sheet.write("C17", fax_string, document_info_value_format)
