@@ -27,5 +27,5 @@ class CustomerMonthlyStatements(models.TransientModel):
     
     def _get_report_filename(self):
         self.ensure_one()
-        name = f"{self.partner_id.name} - Monthly Statement {self.start_date.strftime("%Y-%m-%d")} - {self.end_date.strftime("%Y-%m-%d")}"
+        name = f"{self.partner_id.name} - Monthly Statement {self.start_date.strftime('%Y-%m-%d')} - {self.end_date.strftime('%Y-%m-%d')}"
         return name
