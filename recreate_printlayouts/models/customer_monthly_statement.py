@@ -124,7 +124,7 @@ class CustomerMonthlyStatement(models.AbstractModel):
             sheet.write("M15", obj.partner_id.x_studio_char_field_1ci_1j35oraga if obj.partner_id.x_studio_char_field_1ci_1j35oraga else '', document_info_value_format)
             sheet.write("M16", obj.partner_id.name, document_info_value_format)
             sheet.merge_range("D15:H20", obj.partner_id.contact_address_complete if obj.partner_id.contact_address_complete else '', address_block_section_format)
-            sheet.write("D22", f"{obj.start_date.strftime("%d %b %Y")} TO {obj.end_date.strftime("%d %b %Y")}", document_info_value_format)
+            sheet.write("D22", f"{obj.start_date.strftime('%d %b %Y')} TO {obj.end_date.strftime('%d %b %Y')}", document_info_value_format)
 
             # Table Header
             for col in range(1, 15):
