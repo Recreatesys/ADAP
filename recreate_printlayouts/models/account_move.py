@@ -18,4 +18,13 @@ class AccountMove(models.Model):
     def _compute_invoice_origin(self):
         for order in self:
             order.pi_number = order.invoice_origin
+
+
+class AccountMoveLine(models.Model):
+
+    _inherit = "account.move.line"
+
+    remarks = fields.Char(string="Remarks", store=True)
+    weight = fields.Float(string="Weight", store=True)
+    rate = fields.Float(string="Rate", store=True)
     

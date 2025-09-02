@@ -1,1 +1,2 @@
 from . import customer_monthly_statements_wizard
+from . import adap_monthly_statement_wizard

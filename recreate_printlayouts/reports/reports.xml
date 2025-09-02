@@ -70,5 +70,15 @@
         <field name="binding_model_id" ref="recreate_printlayouts.model_account_customer_monthly_statements"/>
     </record>
 
+
+    <record id="action_adap_inter_statements" model="ir.actions.report">
+        <field name="name">Adap Monthly Statement</field>
+        <field name="model">adap.monthly.statement.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">recreate_printlayouts.report_adap_inter_statements</field>
+        <field name="report_file">recreate_printlayouts.report_adap_inter_statements</field>
+        <field name="print_report_name">(object._get_report_filename())</field>
+        <field name="binding_model_id" ref="recreate_printlayouts.model_adap_monthly_statement_wizard"/>
+    </record>
     
 </odoo>

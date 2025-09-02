@@ -148,7 +148,6 @@ class CustomerMonthlyStatement(models.AbstractModel):
             invoice_search_domain = [
                 ('partner_id', '=', obj.partner_id.id),
                 ('state', '!=', 'cancel'),
-                ('state', '!=', 'paid'),
                 ('invoice_date', '<=', obj.end_date),
                 ('invoice_date', '>=', obj.start_date),
             ]

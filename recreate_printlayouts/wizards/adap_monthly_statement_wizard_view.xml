@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_adap_monthly_statement" model="ir.ui.view">
+        <field name="name">adap.monthly.statement.wizard.form</field>
+        <field name="model">adap.monthly.statement.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Adap Monthly Statement">
+                <group>
+                    <field name="month"/>
+                </group>
+                <footer>
+                    <button name="action_button" string="Confirm" type="object" class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="x" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>
