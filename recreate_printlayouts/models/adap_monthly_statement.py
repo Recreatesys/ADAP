@@ -223,12 +223,14 @@ class AdapMonthlyStatment(models.AbstractModel):
 
             row += 2
 
+            target_date = date(datetime.now().year, month_mapping[obj.month] + 1, 1)
+
             invoice_month_paid, invoice_month_debt = defaultdict(int), defaultdict(int)
-            all_invoice = self.env['account.move'].search([])
+            all_invoice = self.env['account.move'].search([("partner_id", '=', 1), ('invoice_date', '<', target_date)])
             payment_record_list = []
             for invoice_rec in all_invoice:
                 payment_info = invoice_rec.invoice_payments_widget
-                invoice_month_debt[invoice_rec.invoice_date.month] += invoice_rec.amount_residual
+                invoice_month_debt[(invoice_rec.invoice_date.month, invoice_rec.invoice_date.year)] += invoice_rec.amount_residual
                 if payment_info and payment_info['content']:
                     for payment_rec in payment_info['content']:
                         if payment_rec["date"].year == datetime.now().year and payment_rec["date"].month == month_mapping[obj.month]:
@@ -251,9 +253,9 @@ class AdapMonthlyStatment(models.AbstractModel):
                 sheet.write(row, col, None, top_border_format)
             row += 1
 
-            sorted_invoice_month_debt = sorted(invoice_month_paid.items())
+            sorted_invoice_month_debt = sorted(invoice_month_paid.items(), key=lambda x: (x[1], x[0]))
             for month, amount in sorted_invoice_month_debt:
-                sheet.write(row, 13, f"扣減{month}月份帐", deduct_monthly_debt_section_format)
+                sheet.write(row, 13, f"扣減{month[0]}月份帐", deduct_monthly_debt_section_format)
                 sheet.write(row, 15, "人民币 (RMB¥)", deduct_monthly_debt_section_format)
                 sheet.write(row, 18, amount, deduct_monthly_debt_section_format)
                 row += 1
@@ -274,15 +276,26 @@ class AdapMonthlyStatment(models.AbstractModel):
             sheet.write(row, 18, total - invoice_month_paid[obj.month], special_total_format)
             row += 2
 
-            total_debt, remain = sum(invoice_month_debt.values()), sum(invoice_month_debt.values())
+            
             selected_month = month_mapping[obj.month]
             current_year = datetime.now().year
 
+            total_debt, remain = 0, 0
+            for k, v in invoice_month_debt.items():
+                c_month, c_year = k
+                if c_year == current_year:
+                    if c_month <= selected_month:
+                        total_debt += v
+                        remain += v
+                elif c_year < current_year:
+                    total_debt += v
+                    remain += v
+
             sheet.write(row, 13, "本月结欠", debt_section_format)
             sheet.write(row, 15, f"{current_year}年{selected_month}月份", debt_section_format)
-            sheet.write(row, 18, invoice_month_debt[selected_month] if invoice_month_debt[selected_month] > 0 else '', debt_section_format)
+            sheet.write(row, 18, invoice_month_debt[(selected_month, current_year)] if invoice_month_debt[(selected_month, current_year)] > 0 else '', debt_section_format)
             sheet.write(row, 2, "签署及盖章确认:", signature_text_format)
-            remain -= invoice_month_debt[selected_month]
+            remain -= invoice_month_debt[(selected_month, current_year)]
             selected_month -= 1
             if selected_month == 0:
                 selected_month = 12
@@ -291,8 +304,8 @@ class AdapMonthlyStatment(models.AbstractModel):
 
             sheet.write(row, 13, "欠款 1-30 天", debt_section_format)
             sheet.write(row, 15, f"{current_year}年{selected_month}月份", debt_section_format)
-            sheet.write(row, 18, invoice_month_debt[selected_month] if invoice_month_debt[selected_month] > 0 else '', debt_section_format)
-            remain -= invoice_month_debt[selected_month]
+            sheet.write(row, 18, invoice_month_debt[(selected_month, current_year)] if invoice_month_debt[(selected_month, current_year)] > 0 else '', debt_section_format)
+            remain -= invoice_month_debt[(selected_month, current_year)]
             selected_month -= 1
             if selected_month == 0:
                 selected_month = 12
@@ -301,8 +314,8 @@ class AdapMonthlyStatment(models.AbstractModel):
 
             sheet.write(row, 13, "欠款 31-60 天", debt_section_format)
             sheet.write(row, 15, f"{current_year}年{selected_month}月份", debt_section_format)
-            sheet.write(row, 18, invoice_month_debt[selected_month] if invoice_month_debt[selected_month] > 0 else '', debt_section_format)
-            remain -= invoice_month_debt[selected_month]
+            sheet.write(row, 18, invoice_month_debt[(selected_month, current_year)] if invoice_month_debt[(selected_month, current_year)] > 0 else '', debt_section_format)
+            remain -= invoice_month_debt[(selected_month, current_year)]
             selected_month -= 1
             if selected_month == 0:
                 selected_month = 12
@@ -311,8 +324,8 @@ class AdapMonthlyStatment(models.AbstractModel):
 
             sheet.write(row, 13, "欠款 61-90 天", debt_section_format)
             sheet.write(row, 15, f"{current_year}年{selected_month}月份", debt_section_format)
-            sheet.write(row, 18, invoice_month_debt[selected_month] if invoice_month_debt[selected_month] > 0 else '', debt_section_format)
-            remain -= invoice_month_debt[selected_month]
+            sheet.write(row, 18, invoice_month_debt[(selected_month, current_year)] if invoice_month_debt[(selected_month, current_year)] > 0 else '', debt_section_format)
+            remain -= invoice_month_debt[(selected_month, current_year)]
             selected_month -= 1
             if selected_month == 0:
                 selected_month = 12
