@@ -6,7 +6,7 @@ from odoo.modules.module import get_module_resource
 _logger = logging.getLogger(__name__)
 
 class CommercialInvoiceXlsx(models.AbstractModel):
-    _name = 'report.recreate_printlayouts.report_adap_commercial_invoice'
+    _name = 'report.printlayouts.report_adap_commercial_invoice'
     _inherit = 'report.report_xlsx.abstract'
 
     def generate_xlsx_report(self, workbook, data, moves):
@@ -101,7 +101,7 @@ class CommercialInvoiceXlsx(models.AbstractModel):
             })
 
             # Company Logo Area
-            sheet.insert_image("B3", get_module_resource('recreate_printlayouts', 'static/src/img', 'company_logo.png'))
+            sheet.insert_image("B3", get_module_resource('printlayouts', 'static/src/img', 'company_logo.png'))
 
             # Company name / information section
             sheet.set_column("M:N", 13.57)

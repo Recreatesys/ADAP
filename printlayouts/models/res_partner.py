@@ -6,3 +6,5 @@ class ResPartner(models.Model):
 
     irc_number = fields.Char(string="IRC No.")
     tin_number = fields.Char(string="TIN")
+
+    # total_all_due = fields.Integer(string="Dummy")

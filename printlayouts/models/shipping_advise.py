@@ -7,7 +7,7 @@ from datetime import datetime
 _logger = logging.getLogger(__name__)
 
 class ShippingAdviseXlsx(models.AbstractModel):
-    _name = 'report.recreate_printlayouts.report_adap_shipping_advise'
+    _name = 'report.printlayouts.report_adap_shipping_advise'
     _inherit = 'report.report_xlsx.abstract'
 
     def generate_xlsx_report(self, workbook, data, picking):
@@ -78,7 +78,7 @@ class ShippingAdviseXlsx(models.AbstractModel):
                 "font_size": 18
             })
 
-            sheet.insert_image("B3", get_module_resource('recreate_printlayouts', 'static/src/img', 'company_logo.png'))
+            sheet.insert_image("B3", get_module_resource('printlayouts', 'static/src/img', 'company_logo.png'))
             sheet.write("N5", str(f"Date: {datetime.today().strftime('%B %d, %Y')}"), header_format)
 
             sheet.write("B10", "TO:", header_attn_format)

@@ -22,7 +22,7 @@ class CustomerMonthlyStatements(models.TransientModel):
         return (datetime.today() - relativedelta(years=1)).date()
 
     def action_button(self):
-        return self.env.ref('recreate_printlayouts.action_adap_monthly_statements').report_action(self)
+        return self.env.ref('printlayouts.action_adap_monthly_statements').report_action(self)
     
     def _get_report_filename(self):
         self.ensure_one()

@@ -6,8 +6,8 @@ from datetime import datetime
 
 _logger = logging.getLogger(__name__)
 
-class BeneficiaryCertificateXlsx(models.AbstractModel):
-    _name = 'report.recreate_printlayouts.report_adap_beneficiary_cert'
+class CertificateXlsx(models.AbstractModel):
+    _name = 'report.printlayouts.report_adap_certificate'
     _inherit = 'report.report_xlsx.abstract'
 
     def generate_xlsx_report(self, workbook, data, picking):
@@ -51,7 +51,7 @@ class BeneficiaryCertificateXlsx(models.AbstractModel):
                 "font_size": 12
             })
 
-            sheet.insert_image("B3", get_module_resource('recreate_printlayouts', 'static/src/img', 'company_logo.png'))
+            sheet.insert_image("B3", get_module_resource('printlayouts', 'static/src/img', 'company_logo.png'))
             sheet.write("N5", str(f"Date: {datetime.today().strftime('%B %d, %Y')}"), header_format)
             sheet.write("B11", obj.partner_id.contact_address_complete, header_format)
             sheet.write("B12", str(f"IRC NO. {obj.partner_id.irc_number if obj.partner_id.irc_number else ''}"), header_format)
@@ -62,7 +62,7 @@ class BeneficiaryCertificateXlsx(models.AbstractModel):
                 sheet.write(17, column, None, bottom_border)
             sheet.write("B18", "ATTN: TO WHOM IT MAY CONCERN", header_attn_format)
 
-            sheet.merge_range("G21:N22", "BENEFICIARY'S CERTIFICATE", title_format)
+            sheet.merge_range("G21:N22", "CERTIFICATE", title_format)
 
             sheet.write("B26", "P/I No.:", main_content_label_format)
             sheet.write("B28", "Name of Vessel:", main_content_label_format)
@@ -80,22 +80,12 @@ class BeneficiaryCertificateXlsx(models.AbstractModel):
             sheet.write("M32", obj.shipment_date if obj.shipment_date else '', main_content_format)
             sheet.write("M34", obj.bill_of_lading_number if obj.bill_of_lading_number else '', main_content_format)
 
-            sheet.write("B37", "* WE CERTIFY THAT ONE COMPLETE SET OF NON NEGOTIABLE SHIPPING DOCUMENTS HAS BEEN SENT TO " \
-            "APPLICANT WITHIN 10 (TEN) WORKING DAYS OF SHIPMENT THROUGH EMAIL: TAPASHEAL AT ESQUIREBD.COM", header_format)
-
             invoice_origins = obj.origin.split(',')
             record_list = [self.env["sale.order"].search([('name', '=', name)]) for name in invoice_origins]
             lc_no_ls, lc_date = [rec.lc_number for rec in record_list if rec.lc_number], [rec.lc_issue_date.strftime("%Y%m%d") for rec in record_list if rec.lc_issue_date]
             if lc_no_ls and lc_date:
                 sheet.write("B40", f"L/C No. AND DATE {','.join(lc_no_ls)} DATE of ISSUE {','.join(lc_date)}", main_content_label_format)
-            sheet.write("B42", 'Remarks:', main_content_label_format)
-            sheet.write("B43", obj.remarks if obj.remarks else '', header_format)
-
-            sheet.write("B46", "ISSUED BY", header_format)
-            for col in range(1, 8):
+            sheet.write("L46", "ISSUED BY", header_format)
+            for col in range(11, 16):
                 sheet.write(50, col, None, bottom_border)
-            sheet.write("B52", "ADAP.S ASIA COMPANY LIMITED", document_end_format)
-
-            sheet.write("H57", 'ADAP.S ASIA  COMPANY LIMITED', header_format)
-            sheet.write("F58", 'UNIT 2803, 28/F, PROSPERITY PLACE 6 SHING YIP STREET, KWUN TONG KOWLOON, HONG KONG', document_end_format)
-            sheet.write("G59", 'Tel:+852 2136 8454 Fax: +852 2137 0444 Email: info@adpsasia.com', document_end_format)
+            sheet.write("L52", "AS AGENT OF CARRIER", document_end_format)

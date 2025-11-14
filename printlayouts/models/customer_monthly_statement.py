@@ -7,7 +7,7 @@ from datetime import datetime
 _logger = logging.getLogger(__name__)
 
 class CustomerMonthlyStatement(models.AbstractModel):
-    _name = 'report.recreate_printlayouts.report_adap_monthly_statements'
+    _name = 'report.printlayouts.report_adap_monthly_statements'
     _inherit = 'report.report_xlsx.abstract'
 
     def generate_xlsx_report(self, workbook, data, wizard):
@@ -98,7 +98,7 @@ class CustomerMonthlyStatement(models.AbstractModel):
             })
 
             # Company Logo Area
-            sheet.insert_image("B3", get_module_resource('recreate_printlayouts', 'static/src/img', 'company_logo.png'))
+            sheet.insert_image("B3", get_module_resource('printlayouts', 'static/src/img', 'company_logo.png'))
 
             # Company name / information section
             sheet.set_column("M:N", 13.57)

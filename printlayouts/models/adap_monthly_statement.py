@@ -8,7 +8,7 @@ from collections import defaultdict
 _logger = logging.getLogger(__name__)
 
 class AdapMonthlyStatment(models.AbstractModel):
-    _name = 'report.recreate_printlayouts.report_adap_inter_statements'
+    _name = 'report.printlayouts.report_adap_inter_statements'
     _inherit = 'report.report_xlsx.abstract'
 
     def generate_xlsx_report(self, workbook, data, wizard):

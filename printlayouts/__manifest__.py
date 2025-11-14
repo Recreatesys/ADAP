@@ -1,5 +1,5 @@
 {
-    "name": "Recreate Print Layouts",
+    "name": "Print Layouts",
     "summary": "Includes all the print layouts for Adap",
     "author": "Lau Siu Hin",
     "version": "1.0",

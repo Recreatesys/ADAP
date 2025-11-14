@@ -29,7 +29,7 @@ class AdapMonthlyStatementWizard(models.TransientModel):
     ], required=True)
 
     def action_button(self):
-        return self.env.ref('recreate_printlayouts.action_adap_inter_statements').report_action(self)
+        return self.env.ref('printlayouts.action_adap_inter_statements').report_action(self)
     
 
     def _get_report_filename(self):

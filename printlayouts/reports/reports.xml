@@ -4,8 +4,8 @@
         <field name="name">Adap Commercial Invoice</field>
         <field name="model">account.move</field>
         <field name="report_type">xlsx</field>
-        <field name="report_name">recreate_printlayouts.report_adap_commercial_invoice</field>
-        <field name="report_file">recreate_printlayouts.report_adap_commercial_invoice</field>
+        <field name="report_name">printlayouts.report_adap_commercial_invoice</field>
+        <field name="report_file">printlayouts.report_adap_commercial_invoice</field>
         <field name="print_report_name">'Commercial Invoice - ' + (object._get_report_base_filename())</field>
         <field name="binding_model_id" ref="account.model_account_move"/>
     </record>
@@ -14,8 +14,8 @@
         <field name="name">Adap Packing List</field>
         <field name="model">stock.picking</field>
         <field name="report_type">xlsx</field>
-        <field name="report_name">recreate_printlayouts.report_adap_packing_list</field>
-        <field name="report_file">recreate_printlayouts.report_adap_packing_list</field>
+        <field name="report_name">printlayouts.report_adap_packing_list</field>
+        <field name="report_file">printlayouts.report_adap_packing_list</field>
         <field name="print_report_name">'Adap Packing List'</field>
         <field name="binding_model_id" ref="stock.model_stock_picking"/>
     </record>
@@ -24,8 +24,8 @@
         <field name="name">Adap Beneficiary Certificate</field>
         <field name="model">stock.picking</field>
         <field name="report_type">xlsx</field>
-        <field name="report_name">recreate_printlayouts.report_adap_beneficiary_cert</field>
-        <field name="report_file">recreate_printlayouts.report_adap_beneficiary_cert</field>
+        <field name="report_name">printlayouts.report_adap_beneficiary_cert</field>
+        <field name="report_file">printlayouts.report_adap_beneficiary_cert</field>
         <field name="print_report_name">'Adap Beneficiary Certificate'</field>
         <field name="binding_model_id" ref="stock.model_stock_picking"/>
     </record>
@@ -34,8 +34,8 @@
         <field name="name">Adap Certificate</field>
         <field name="model">stock.picking</field>
         <field name="report_type">xlsx</field>
-        <field name="report_name">recreate_printlayouts.report_adap_certificate</field>
-        <field name="report_file">recreate_printlayouts.report_adap_certificate</field>
+        <field name="report_name">printlayouts.report_adap_certificate</field>
+        <field name="report_file">printlayouts.report_adap_certificate</field>
         <field name="print_report_name">'Adap Certificate'</field>
         <field name="binding_model_id" ref="stock.model_stock_picking"/>
     </record>
@@ -44,8 +44,8 @@
         <field name="name">Adap Shipping Advice</field>
         <field name="model">stock.picking</field>
         <field name="report_type">xlsx</field>
-        <field name="report_name">recreate_printlayouts.report_adap_shipping_advise</field>
-        <field name="report_file">recreate_printlayouts.report_adap_shipping_advise</field>
+        <field name="report_name">printlayouts.report_adap_shipping_advise</field>
+        <field name="report_file">printlayouts.report_adap_shipping_advise</field>
         <field name="print_report_name">'Adap Shipping Advice'</field>
         <field name="binding_model_id" ref="stock.model_stock_picking"/>
     </record>
@@ -54,8 +54,8 @@
         <field name="name">Adap Proforma Invoice</field>
         <field name="model">sale.order</field>
         <field name="report_type">xlsx</field>
-        <field name="report_name">recreate_printlayouts.report_adap_proforma_invoice</field>
-        <field name="report_file">recreate_printlayouts.report_adap_proforma_invoice</field>
+        <field name="report_name">printlayouts.report_adap_proforma_invoice</field>
+        <field name="report_file">printlayouts.report_adap_proforma_invoice</field>
         <field name="print_report_name">'Proforma Invoice - %s' % (object.name)</field>
         <field name="binding_model_id" ref="sale.model_sale_order"/>
     </record>
@@ -64,10 +64,10 @@
         <field name="name">Adap Customer Monthly Statement</field>
         <field name="model">account.customer.monthly.statements</field>
         <field name="report_type">xlsx</field>
-        <field name="report_name">recreate_printlayouts.report_adap_monthly_statements</field>
-        <field name="report_file">recreate_printlayouts.report_adap_monthly_statements</field>
+        <field name="report_name">printlayouts.report_adap_monthly_statements</field>
+        <field name="report_file">printlayouts.report_adap_monthly_statements</field>
         <field name="print_report_name">(object._get_report_filename())</field>
-        <field name="binding_model_id" ref="recreate_printlayouts.model_account_customer_monthly_statements"/>
+        <field name="binding_model_id" ref="printlayouts.model_account_customer_monthly_statements"/>
     </record>
 
 
@@ -75,10 +75,10 @@
         <field name="name">Adap Monthly Statement</field>
         <field name="model">adap.monthly.statement.wizard</field>
         <field name="report_type">xlsx</field>
-        <field name="report_name">recreate_printlayouts.report_adap_inter_statements</field>
-        <field name="report_file">recreate_printlayouts.report_adap_inter_statements</field>
+        <field name="report_name">printlayouts.report_adap_inter_statements</field>
+        <field name="report_file">printlayouts.report_adap_inter_statements</field>
         <field name="print_report_name">(object._get_report_filename())</field>
-        <field name="binding_model_id" ref="recreate_printlayouts.model_adap_monthly_statement_wizard"/>
+        <field name="binding_model_id" ref="printlayouts.model_adap_monthly_statement_wizard"/>
     </record>
     
 </odoo>
