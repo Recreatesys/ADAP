@@ -175,6 +175,6 @@ class ShippingAdviseXlsx(models.AbstractModel):
             row += 1
             sheet.write(row, 5, 'UNIT 2803, 28/F, PROSPERITY PLACE 6 SHING YIP STREET, KWUN TONG KOWLOON, HONG KONG', document_end_format)
             row += 1
-            sheet.write(row, 7, 'Tel:+852 2136 8454 Fax: +852 2137 0444 Email: info@adpsasia.com', document_end_format)
+            sheet.write(row, 7, 'Tel:+852 2136 8454 Fax: +852 2137 0444 Email: info@adapsasia.com', document_end_format)
 
 

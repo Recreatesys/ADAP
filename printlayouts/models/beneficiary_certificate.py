@@ -98,4 +98,4 @@ class BeneficiaryCertificateXlsx(models.AbstractModel):
 
             sheet.write("H57", 'ADAP.S ASIA  COMPANY LIMITED', header_format)
             sheet.write("F58", 'UNIT 2803, 28/F, PROSPERITY PLACE 6 SHING YIP STREET, KWUN TONG KOWLOON, HONG KONG', document_end_format)
-            sheet.write("G59", 'Tel:+852 2136 8454 Fax: +852 2137 0444 Email: info@adpsasia.com', document_end_format)
+            sheet.write("G59", 'Tel:+852 2136 8454 Fax: +852 2137 0444 Email: info@adapsasia.com', document_end_format)
