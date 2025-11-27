@@ -80,5 +80,14 @@
         <field name="print_report_name">(object._get_report_filename())</field>
         <field name="binding_model_id" ref="printlayouts.model_adap_monthly_statement_wizard"/>
     </record>
+
+    <record id="action_adap_account_receivable_report" model="ir.actions.report">
+        <field name="name">ADAP Account Receivable</field>
+        <field name="model">account.move</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">printlayouts.report_adap_account_receivable_report</field>
+        <field name="report_file">printlayouts.report_adap_account_receivable_report</field>
+        <field name="print_report_name">'應收賬'</field>
+    </record>
     
 </odoo>

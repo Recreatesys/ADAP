@@ -31,5 +31,11 @@
                   parent="account.account_reports_partners_reports_menu"
                   action="action_inter_monthly_statement"
                   sequence="51"/>
+
+        <menuitem id="adap_account_receivable_report" 
+                  name="ADAP Account Rceivable Report"
+                  parent="account.account_reports_partners_reports_menu"
+                  action="action_adap_account_receivable_report"
+                  sequence="51"/>
     </data>
 </odoo>
