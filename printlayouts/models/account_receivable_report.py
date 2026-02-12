@@ -78,7 +78,7 @@ class AdapAccountReceivableReport(models.AbstractModel):
             "bold": 1,
         })
 
-        moves = self.env["account.move"].search([('status_in_payment', '=', 'not_paid')])
+        moves = self.env["account.move"].search([('status_in_payment', '=', 'not_paid'), ('invoice_date', '!=', False)])
         month_mapping = {
             1: '一', 2: '二',
             3: '三', 4: '四',
@@ -133,7 +133,7 @@ class AdapAccountReceivableReport(models.AbstractModel):
             earliest_date = display_date - relativedelta(months=1)
 
             for move in moves:
-                if earliest_date.date() < move.invoice_date <= curr_display_date.date():
+                if move.invoice_date and earliest_date.date() < move.invoice_date <= curr_display_date.date():
                     partner_name = move.partner_id.name
                     if partner_name not in partner_tracking:
                         partner_tracking[partner_name] = {times: 0 for times in timeframe}
