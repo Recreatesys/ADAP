@@ -1,0 +1,53 @@
+<odoo>
+
+    <!-- ============================================================
+         Pro-Forma Invoice (sale.order) layout tweaks.
+
+         The live "Pro-Forma Invoice" report (sale.report_saleorder_pro_forma)
+         renders sale.report_saleorder_document, which on this DB is a
+         Studio-customized primary view (id 1053). This inherited view layers
+         four requested changes on top of it:
+           1. Title "Pro-Forma Invoice No.:" -> "Proforma Invoice No.:"
+           2. Add a "PO Number" column (x_studio_client_po_reference)
+              to the left of PI Expiry Date (keeps existing "Client PO No.").
+           3. Move the Incoterm line to directly above Payment Terms,
+              relabelled "Inco-term:".
+           4. Remove the "Shipping Policy:" line.
+         ============================================================ -->
+
+    <record id="report_saleorder_document_adap_proforma" model="ir.ui.view">
+        <field name="name">sale.report_saleorder_document.adap.proforma</field>
+        <field name="inherit_id" ref="sale.report_saleorder_document"/>
+        <field name="arch" type="xml">
+
+            <!-- 1. Title wording -->
+            <xpath expr="//h2/span[1]" position="replace">
+                <span t-if="env.context.get('proforma', False) or is_pro_forma">Proforma Invoice No.: </span>
+            </xpath>
+
+            <!-- 2. New PO Number field, left of PI Expiry Date -->
+            <xpath expr="//div[@name='expiration_date']" position="before">
+                <div t-if="doc.x_studio_client_po_reference" class="col" name="po_number">
+                    <strong>PO Number</strong>
+                    <div t-field="doc.x_studio_client_po_reference"/>
+                </div>
+            </xpath>
+
+            <!-- 3a. Remove the original (top) Incoterm line + its trailing br -->
+            <xpath expr="//span[@t-if='doc.x_incoterm_custom_id']" position="replace"/>
+            <xpath expr="//br[@t-if='doc.x_incoterm_custom_id and doc.incoterm_location']" position="replace"/>
+
+            <!-- 4. Remove the Shipping Policy line + its preceding br -->
+            <xpath expr="//br[@t-if='doc.picking_policy']" position="replace"/>
+            <xpath expr="//span[@t-if='doc.picking_policy']" position="replace"/>
+
+            <!-- 3b. Re-insert Incoterm directly above Payment Terms, as "Inco-term:" -->
+            <xpath expr="//br[@t-if='doc.payment_term_id']" position="before">
+                <br t-if="doc.x_incoterm_custom_id"/>
+                <span t-if="doc.x_incoterm_custom_id"><strong>Inco-term:</strong> <span t-esc="doc.x_incoterm_custom_id.x_name"/></span>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>
