@@ -2,7 +2,7 @@
     "name": "Print Layouts",
     "summary": "Includes all the print layouts for Adap",
     "author": "Lau Siu Hin",
-    "version": "1.2",
+    "version": "1.3",
     "depends": ['base', 'account', 'contacts', "sale"],
     "data": [
         "security/ir.model.access.csv",

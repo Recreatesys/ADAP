@@ -24,5 +24,20 @@
 
             </field>
         </record>
+
+        <!-- Move Incoterm + Incoterm Location directly under Delivery Address.
+             High priority so it runs after the views that add those fields. -->
+        <record id="view_order_form_incoterm_under_delivery" model="ir.ui.view">
+            <field name="name">sale.order.form.incoterm.under.delivery</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="priority">200</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                    <xpath expr="//field[@name='x_incoterm_custom_id']" position="move"/>
+                    <xpath expr="//field[@name='incoterm_location']" position="move"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </odoo>
