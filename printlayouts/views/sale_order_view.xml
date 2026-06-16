@@ -7,6 +7,10 @@
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
 
+                <xpath expr="//field[@name='client_order_ref']" position="attributes">
+                    <attribute name="string">Client PO No.</attribute>
+                </xpath>
+
                 <xpath expr="//field[@name='payment_term_id']" position="after">
                     <field name="lc_number"/>
                     <field name="lc_issue_date"/>
