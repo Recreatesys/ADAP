@@ -11,6 +11,9 @@
             <xpath expr="//field[@name='move_ids_without_package']/list/field[@name='product_uom']" position="after">
                 <field name="x_dn_remark" string="备注" optional="show"/>
             </xpath>
+            <xpath expr="//field[@name='move_ids_without_package']/list/field[@name='product_packaging_id']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
         </field>
     </record>
 </odoo>
