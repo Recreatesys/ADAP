@@ -1,0 +1,89 @@
+<odoo>
+
+    <!-- A5 landscape paper format for the delivery note -->
+    <record id="paperformat_dn_a5_landscape" model="report.paperformat">
+        <field name="name">A5 Landscape (Delivery Note)</field>
+        <field name="format">A5</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">8.0</field>
+        <field name="margin_bottom">10.0</field>
+        <field name="margin_left">7.0</field>
+        <field name="margin_right">7.0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">3</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <!-- Custom layout: no logo/company header, centered company name + 送货单 in body -->
+    <template id="delivery_note_layout">
+    <div t-attf-class="header o_company_#{company.id}_layout"/>
+    <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+        <t t-call="web.address_layout"/>
+        <t t-out="0"/>
+    </div>
+    <div t-attf-class="footer o_company_#{company.id}_layout">
+        <div class="o_footer_content d-flex border-top pt-2">
+            <div class="flex-grow-1 text-start me-2" t-field="company.report_footer"/>
+            <div class="text-end text-muted">
+                <div t-if="report_type == 'pdf'" class="text-nowrap">Page <span class="page"/> / <span class="topage"/></div>
+            </div>
+        </div>
+    </div>
+</template>
+
+    <!-- Document body -->
+    <template id="report_adap_delivery_note_document"><t t-call="web.html_container"><t t-set="o" t-value="o.with_context(lang=o._get_report_lang())"/><t t-set="company" t-value="o.company_id.sudo()"/><t t-set="partner" t-value="(o.move_ids and o.move_ids[0].partner_id) or o.partner_id or False"/><t t-set="custom_layout_address" t-value="False"/><t t-set="address" t-value="False"/><t t-set="information_block" t-value="False"/><t t-call="printlayouts.delivery_note_layout"><div class="page"><div class="text-center" style="margin-bottom:6px;">
+  <div style="font-size:18px;font-weight:bold;">誉达金属塑胶制品（惠州）有限公司</div>
+  <div style="font-size:26px;font-weight:bold;line-height:1.1;">送货单</div>
+</div><style>
+  table.adap-dn { border-collapse: collapse !important; width: 100%; font-size: 11px; }
+  table.adap-dn th, table.adap-dn td { border: 1px solid #000 !important; padding: 3px 4px; vertical-align: top; }
+  table.adap-dn thead th { background-color: #f2f2f2; text-align: center; }
+</style><div class="row mb-2" style="font-size:13px;">
+  <div class="col-6">
+    <div><strong>客户：</strong><span t-field="partner.commercial_partner_id.name"/></div>
+    <div><strong>地址：</strong><span t-out="partner" t-options="{&quot;widget&quot;:&quot;contact&quot;,&quot;fields&quot;:[&quot;address&quot;],&quot;no_marker&quot;:True}"/></div>
+    <div><strong>联系人／电话：</strong><span t-field="partner.name"/> / <span t-field="partner.phone"/></div>
+  </div>
+  <div class="col-6">
+    <div><strong>客户编号：</strong><span t-field="partner.commercial_partner_id.company_registry"/></div>
+    <div><strong>交货日期：</strong><span t-out="o.date_done or o.scheduled_date" t-options="{&quot;widget&quot;:&quot;date&quot;}"/></div>
+    <div><strong>送货单号：</strong><span t-field="o.name"/></div>
+  </div>
+</div><table class="adap-dn">
+  <thead><tr>
+    <th>订单编号</th><th>产品描述</th><th>客户产品搆述</th>
+    <th class="text-end">箱数</th><th class="text-end">数量</th>
+    <th>单位</th><th>表面</th><th>备注</th>
+  </tr></thead>
+  <tbody>
+    <tr t-foreach="o.move_ids.filtered(lambda l: l.product_uom_qty)" t-as="move">
+      <td><span t-out="move.sale_line_id.order_id.name or move.origin"/></td>
+      <td><span t-field="move.product_id"/></td>
+      <td><span t-out="move.sale_line_id.x_studio_ if move.sale_line_id else ''"/></td>
+      <td class="text-end"><span t-if="move.cartons" t-out="move.cartons"/></td>
+      <td class="text-end"><span t-field="move.quantity"/></td>
+      <td><span t-field="move.product_uom"/></td>
+      <td><span t-out="move.product_id.description_sale or ''"/></td>
+      <td><span t-out="move.x_dn_remark or ''"/></td>
+    </tr>
+  </tbody>
+</table></div></t></t></template>
+
+    <!-- Wrapper -->
+    <template id="report_adap_delivery_note"><t t-foreach="docs" t-as="o"><t t-call="printlayouts.report_adap_delivery_note_document" t-lang="o._get_report_lang()"/></t></template>
+
+    <!-- Report action -->
+    <record id="action_adap_delivery_note" model="ir.actions.report">
+        <field name="name">Delivery Note (送货单)</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">printlayouts.report_adap_delivery_note</field>
+        <field name="report_file">printlayouts.report_adap_delivery_note</field>
+        <field name="print_report_name">'送货单 - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_dn_a5_landscape"/>
+    </record>
+
+</odoo>
