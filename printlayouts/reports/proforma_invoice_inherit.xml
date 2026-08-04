@@ -60,6 +60,12 @@
             </xpath>
             <xpath expr="//div[@name='disclaimer']" position="replace"/>
 
+            <!-- 8. Print the "Issued by" name (x_issued_by, default "Kawa Chan")
+                 beside the signature-block label. -->
+            <xpath expr="//div[@name='signature_block']/div[1]/strong" position="replace">
+                <strong>Issued by:</strong> <span t-field="doc.x_issued_by"/>
+            </xpath>
+
         </field>
     </record>
 

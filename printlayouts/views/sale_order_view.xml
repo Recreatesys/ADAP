@@ -22,10 +22,13 @@
                     <field name="country_of_origin"/>
                 </xpath>
 
-                <!-- Payment Bank radio (HSBC / SC) above the Terms &amp; Conditions field.
-                     Drives which bank appears in the composed Terms. -->
+                <!-- Payment Bank radio (HSBC / SC) + Issued by, above the Terms &amp; Conditions
+                     field. Payment Bank drives which bank shows in the composed Terms;
+                     Issued by (default "Kawa Chan", editable) prints in the proforma
+                     signature block. Both are runtime manual fields. -->
                 <xpath expr="//field[@name='note']" position="before">
                     <field name="x_payment_bank" widget="radio" options="{'horizontal': True}"/>
+                    <field name="x_issued_by"/>
                 </xpath>
 
             </field>

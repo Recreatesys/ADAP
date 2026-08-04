@@ -14,5 +14,22 @@
 
             </field>
         </record>
+
+        <!-- Per-customer default Incoterm / Incoterm Location, shown next to the
+             standard Customer Payment Terms. Sale orders sync these on confirm and
+             on edits in the Sales Order state; new quotations auto-fill from them.
+             (x_default_incoterm_id / x_default_incoterm_location are runtime manual
+             fields on res.partner.) -->
+        <record id="view_partner_form_default_terms" model="ir.ui.view">
+            <field name="name">res.partner.form.default.terms</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="account.view_partner_property_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='property_payment_term_id']" position="after">
+                    <field name="x_default_incoterm_id"/>
+                    <field name="x_default_incoterm_location"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </odoo>
