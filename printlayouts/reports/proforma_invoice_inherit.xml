@@ -66,6 +66,19 @@
                 <strong>Issued by:</strong> <span t-field="doc.x_issued_by"/>
             </xpath>
 
+            <!-- 9. Keep the closing block together on one page: wrap the Terms/Disclaimer
+                 (tc_note), the signature block, and the "*Please sign...*" line in a
+                 page-break-inside:avoid container so it never splits across pages.
+                 (Applies to the KAWA proforma too, which inherits this document.) -->
+            <xpath expr="//div[@name='tc_note']" position="before">
+                <div name="pf_keep_together" style="page-break-inside:avoid;"/>
+            </xpath>
+            <xpath expr="//div[@name='pf_keep_together']" position="inside">
+                <xpath expr="//div[@name='tc_note']" position="move"/>
+                <xpath expr="//div[@name='signature_block']" position="move"/>
+                <xpath expr="//div[em[contains(text(),'Please sign')]]" position="move"/>
+            </xpath>
+
         </field>
     </record>
 
