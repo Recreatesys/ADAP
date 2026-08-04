@@ -33,9 +33,14 @@
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="priority">200</field>
             <field name="arch" type="xml">
+                <!-- Show the STANDARD Incoterm + Incoterm Location directly under Delivery Address -->
                 <xpath expr="//field[@name='partner_shipping_id']" position="after">
-                    <xpath expr="//field[@name='x_incoterm_custom_id']" position="move"/>
+                    <xpath expr="//field[@name='incoterm']" position="move"/>
                     <xpath expr="//field[@name='incoterm_location']" position="move"/>
+                </xpath>
+                <!-- Hide the redundant custom Incoterm field (x_incoterm_custom_id, shows "Unnamed") -->
+                <xpath expr="//field[@name='x_incoterm_custom_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
                 </xpath>
             </field>
         </record>
