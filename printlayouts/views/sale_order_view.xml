@@ -22,6 +22,12 @@
                     <field name="country_of_origin"/>
                 </xpath>
 
+                <!-- Payment Bank radio (HSBC / SC) above the Terms &amp; Conditions field.
+                     Drives which bank appears in the composed Terms. -->
+                <xpath expr="//field[@name='note']" position="before">
+                    <field name="x_payment_bank" widget="radio" options="{'horizontal': True}"/>
+                </xpath>
+
             </field>
         </record>
 

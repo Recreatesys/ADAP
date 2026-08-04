@@ -46,6 +46,20 @@
             <xpath expr="//div[@t-if='doc.incoterm_location']/span[@t-field='doc.incoterm_location']" position="replace"/>
             <xpath expr="//div[@t-if='doc.incoterm_location']/br" position="replace"/>
 
+            <!-- 7. Print the editable Terms &amp; Conditions (note) in place of the
+                 hardcoded Country of Origin / Loading Port / Payment Terms lines,
+                 the old bank (terms_conditions) block, and the disclaimer. -->
+            <xpath expr="//br[@t-if='doc.country_of_origin']" position="replace"/>
+            <xpath expr="//span[@t-if='doc.country_of_origin']" position="replace"/>
+            <xpath expr="//br[@t-if='doc.loading_port']" position="replace"/>
+            <xpath expr="//span[@t-if='doc.loading_port']" position="replace"/>
+            <xpath expr="//br[@t-if='doc.payment_term_id']" position="replace"/>
+            <xpath expr="//span[@t-if='doc.payment_term_id']" position="replace"/>
+            <xpath expr="//div[@name='terms_conditions']" position="replace">
+                <div name="tc_note" class="mt-1" t-field="doc.note"/>
+            </xpath>
+            <xpath expr="//div[@name='disclaimer']" position="replace"/>
+
         </field>
     </record>
 
