@@ -31,6 +31,11 @@
                     <field name="x_issued_by"/>
                 </xpath>
 
+                <!-- Remove the "Optional Products" tab (not used). -->
+                <xpath expr="//page[@name='optional_products']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
             </field>
         </record>
 
