@@ -35,7 +35,7 @@
 </template>
 
     <!-- Document body -->
-    <template id="report_adap_delivery_note_document"><t t-call="web.html_container"><t t-set="o" t-value="o.with_context(lang=o._get_report_lang())"/><t t-set="company" t-value="o.company_id.sudo()"/><t t-set="partner" t-value="(o.move_ids and o.move_ids[0].partner_id) or o.partner_id or False"/><t t-set="custom_layout_address" t-value="False"/><t t-set="address" t-value="False"/><t t-set="information_block" t-value="False"/><t t-call="printlayouts.delivery_note_layout"><div class="page"><div class="text-center" style="margin-bottom:6px;">
+    <template id="report_adap_delivery_note_document"><t t-call="web.html_container"><t t-set="o" t-value="pickings[0].with_context(lang=pickings[0]._get_report_lang())"/><t t-set="company" t-value="o.company_id.sudo()"/><t t-set="partner" t-value="(o.move_ids and o.move_ids[0].partner_id) or o.partner_id or False"/><t t-set="custom_layout_address" t-value="False"/><t t-set="address" t-value="False"/><t t-set="information_block" t-value="False"/><t t-call="printlayouts.delivery_note_layout"><div class="page"><div class="text-center" style="margin-bottom:6px;">
   <div style="font-size:28px;font-weight:bold;">誉达金属塑胶制品（惠州）有限公司</div>
   <div style="font-size:28px;font-weight:bold;line-height:1.1;">送货单</div>
 </div><style>
@@ -53,7 +53,7 @@
   <div class="col-6">
     <div><strong>客户编号：</strong><span t-field="partner.commercial_partner_id.company_registry"/></div>
     <div><strong>交货日期：</strong><span t-out="o.date_done or o.scheduled_date" t-options="{&quot;widget&quot;:&quot;date&quot;}"/></div>
-    <div><strong>送货单号：</strong><span t-field="o.name"/></div>
+    <div><strong>送货单号：</strong><span t-out="', '.join(pickings.mapped('name'))"/></div>
   </div>
 </div><table class="adap-dn">
   <thead><tr>
@@ -62,7 +62,7 @@
     <th>单位</th><th>表面</th><th>备注</th>
   </tr></thead>
   <tbody>
-    <tr t-foreach="o.move_ids.filtered(lambda l: l.product_uom_qty)" t-as="move">
+    <tr t-foreach="pickings.move_ids.filtered(lambda l: l.product_uom_qty)" t-as="move">
       <td><span t-out="move.sale_line_id.order_id.client_order_ref"/></td>
       <td><span t-out="move.product_id.default_code"/></td>
       <td><span t-out="move.sale_line_id.x_studio_ if move.sale_line_id else ''"/></td>
@@ -73,10 +73,11 @@
       <td><span t-out="move.x_dn_remark or ''"/></td>
     </tr>
   </tbody>
-</table><div t-if="o.x_remarks" style="font-size:16px; font-weight:bold; margin-top:8px;"><span t-out="o.x_remarks"/></div></div></t></t></template>
+</table><div t-if="[r for r in pickings.mapped('x_remarks') if r]" style="font-size:16px; font-weight:bold; margin-top:8px;"><span t-out="'; '.join([r for r in pickings.mapped('x_remarks') if r])"/></div></div></t></t></template>
 
     <!-- Wrapper -->
-    <template id="report_adap_delivery_note"><t t-foreach="docs" t-as="o"><t t-call="printlayouts.report_adap_delivery_note_document" t-lang="o._get_report_lang()"/></t></template>
+    <!-- Group selected pickings by customer -> one combined delivery note per customer -->
+    <template id="report_adap_delivery_note"><t t-set="_g" t-value="docs.grouped(lambda p: p.partner_id.commercial_partner_id.id)"/><t t-foreach="_g.values()" t-as="pickings"><t t-call="printlayouts.report_adap_delivery_note_document" t-lang="pickings[0]._get_report_lang()"/></t></template>
 
     <!-- Report action -->
     <record id="action_adap_delivery_note" model="ir.actions.report">
