@@ -47,7 +47,8 @@
   <div class="col-6">
     <div><strong>客户：</strong><span t-field="partner.commercial_partner_id.name"/></div>
     <div><strong>地址：</strong></div><div t-out="' '.join([p for p in [partner.state_id.name, partner.city, partner.street, partner.street2, partner.zip] if p])"/>
-    <div><strong>联系人／电话：</strong><span t-field="partner.name"/> / <span t-field="partner.phone"/></div>
+    <t t-set="dn_contact" t-value="partner if (partner and not partner.is_company) else (partner.child_ids.filtered(lambda c: not c.is_company)[:1] or partner)"/>
+    <div><strong>联系人／电话：</strong><span t-out="dn_contact.name"/> / <span t-out="dn_contact.phone or dn_contact.mobile or partner.phone"/></div>
   </div>
   <div class="col-6">
     <div><strong>客户编号：</strong><span t-field="partner.commercial_partner_id.company_registry"/></div>
