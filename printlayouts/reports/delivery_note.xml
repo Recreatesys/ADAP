@@ -23,14 +23,10 @@
     </div>
     <div t-attf-class="footer o_company_#{company.id}_layout">
         <!-- Footer: 收货单位签章 (left) and 创表人 (right) on one row.
-             Table used instead of flexbox for reliable left/right split in wkhtmltopdf. -->
-        <div class="border-top pt-2">
-            <table style="width:100%; border-collapse:collapse;">
-                <tr>
-                    <td style="text-align:left; border:0; padding:0;">收货单位签章：</td>
-                    <td style="text-align:right; border:0; padding:0;">创表人：黄玉丽</td>
-                </tr>
-            </table>
+             Floated spans (no top line, no borders); floats split reliably in wkhtmltopdf. -->
+        <div class="pt-2" style="overflow:hidden;">
+            <span style="float:left;">收货单位签章：</span>
+            <span style="float:right;">创表人：黄玉丽</span>
         </div>
     </div>
 </template>
