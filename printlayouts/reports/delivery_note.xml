@@ -73,7 +73,7 @@
       <td><span t-out="move.x_dn_remark or ''"/></td>
     </tr>
   </tbody>
-</table></div></t></t></template>
+</table><div t-if="o.x_remarks" style="font-size:16px; font-weight:bold; margin-top:8px;"><span t-out="o.x_remarks"/></div></div></t></t></template>
 
     <!-- Wrapper -->
     <template id="report_adap_delivery_note"><t t-foreach="docs" t-as="o"><t t-call="printlayouts.report_adap_delivery_note_document" t-lang="o._get_report_lang()"/></t></template>
