@@ -46,7 +46,7 @@
 </style><div class="row mb-2" style="font-size:18px;">
   <div class="col-6">
     <div><strong>客户：</strong><span t-field="partner.commercial_partner_id.name"/></div>
-    <div><strong>地址：</strong><span t-out="partner" t-options="{&quot;widget&quot;:&quot;contact&quot;,&quot;fields&quot;:[&quot;address&quot;],&quot;no_marker&quot;:True}"/></div>
+    <div><strong>地址：</strong></div><div t-out="' '.join([p for p in [partner.state_id.name, partner.city, partner.street, partner.street2, partner.zip] if p])"/>
     <div><strong>联系人／电话：</strong><span t-field="partner.name"/> / <span t-field="partner.phone"/></div>
   </div>
   <div class="col-6">
