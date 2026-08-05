@@ -63,7 +63,7 @@
   <tbody>
     <tr t-foreach="o.move_ids.filtered(lambda l: l.product_uom_qty)" t-as="move">
       <td><span t-out="move.sale_line_id.order_id.name or move.origin"/></td>
-      <td><span t-field="move.product_id"/></td>
+      <td><span t-out="move.product_id.default_code"/></td>
       <td><span t-out="move.sale_line_id.x_studio_ if move.sale_line_id else ''"/></td>
       <td><span t-if="move.cartons" t-out="move.cartons"/></td>
       <td><span t-field="move.quantity" t-options="{'widget': 'float', 'precision': 0}"/></td>
