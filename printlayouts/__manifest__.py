@@ -19,6 +19,14 @@
         "views/sale_order_view.xml",
         "views/stock_picking_dn_cols.xml",
     ],
+    # Repoints the user-menu "Documentation/文档" link to the local operations
+    # manual (served from static/src/manual/). Also activated at runtime via an
+    # ir.asset record on both databases, so it works without a module upgrade.
+    "assets": {
+        "web.assets_backend": [
+            "printlayouts/static/src/js/user_menu_doc.js",
+        ],
+    },
     "installable": True,
     
 }

@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>B 销售订单确认后 · 操作流程手册</title></head><body>
+<style>
+  :root{
+    --bg:#f4f3f0; --surface:#fff; --surface-2:#fbfaf8; --ink:#1a1d24; --muted:#5b616e; --faint:#8a909c;
+    --line:#e4e2dd; --line-strong:#cfccc5;
+    --a:#2f5d8a; --b:#2e7d6b; --c:#a9611f;
+    --auto:#3f7d34; --auto-soft:#e7f2e4; --manual:#2f5d8a; --manual-soft:#e7eef6;
+    --copper:#a9611f; --copper-soft:#f4e9dd;
+    --shadow:0 1px 2px rgba(20,22,28,.05),0 8px 24px rgba(20,22,28,.06); --radius:14px;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --bg:#12141a; --surface:#1b1e26; --surface-2:#20232c; --ink:#e9eaee; --muted:#9aa0ac; --faint:#727886;
+    --line:#2a2e38; --line-strong:#3a3f4b;
+    --a:#6ea6dd; --b:#5cc2a8; --c:#d69256;
+    --auto:#6cc25f; --auto-soft:#1c2a18; --manual:#6ea6dd; --manual-soft:#1e2c3b;
+    --copper:#d69256; --copper-soft:#332417;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+  }}
+  :root[data-theme="light"]{--bg:#f4f3f0;--surface:#fff;--surface-2:#fbfaf8;--ink:#1a1d24;--muted:#5b616e;--faint:#8a909c;--line:#e4e2dd;--line-strong:#cfccc5;--a:#2f5d8a;--b:#2e7d6b;--c:#a9611f;--auto:#3f7d34;--auto-soft:#e7f2e4;--manual:#2f5d8a;--manual-soft:#e7eef6;--copper:#a9611f;--copper-soft:#f4e9dd;--shadow:0 1px 2px rgba(20,22,28,.05),0 8px 24px rgba(20,22,28,.06)}
+  :root[data-theme="dark"]{--bg:#12141a;--surface:#1b1e26;--surface-2:#20232c;--ink:#e9eaee;--muted:#9aa0ac;--faint:#727886;--line:#2a2e38;--line-strong:#3a3f4b;--a:#6ea6dd;--b:#5cc2a8;--c:#d69256;--auto:#6cc25f;--auto-soft:#1c2a18;--manual:#6ea6dd;--manual-soft:#1e2c3b;--copper:#d69256;--copper-soft:#332417;--shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35)}
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);line-height:1.7;font-size:16px;-webkit-font-smoothing:antialiased;
+    font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei","Noto Sans SC","Hiragino Sans GB",sans-serif;}
+  .wrap{max-width:940px;margin:0 auto;padding:clamp(20px,4vw,52px) clamp(16px,4vw,32px) 72px}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+
+  header.doc{border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:14px}
+  .eyebrow{font-size:12px;letter-spacing:.2em;color:var(--a);font-weight:700;margin:0 0 10px}
+  h1{font-size:clamp(24px,4.5vw,36px);line-height:1.2;margin:0 0 10px;font-weight:800;letter-spacing:-.01em;text-wrap:balance}
+  .subtitle{color:var(--muted);font-size:clamp(14px,2.3vw,16px);margin:0;max-width:62ch}
+  .meta{display:flex;flex-wrap:wrap;gap:8px 10px;margin-top:18px}
+  .meta span{font-size:12.5px;color:var(--muted);background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+  .meta b{color:var(--ink)}
+
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin:42px 0 16px}
+  .sec-head h2{font-size:18px;margin:0;font-weight:750}
+  .sec-head .num{font-size:12px;font-weight:700;color:var(--faint);letter-spacing:.12em}
+  .sec-head .rule{flex:1;height:1px;background:var(--line)}
+
+  .legend{display:flex;flex-wrap:wrap;gap:12px 20px;margin:6px 0 4px}
+  .legend div{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+  .dot{width:12px;height:12px;border-radius:50%;flex:0 0 auto}
+  .chip{font-size:11px;font-weight:800;letter-spacing:.06em;padding:2px 9px;border-radius:999px}
+  .chip.auto{color:#fff;background:var(--auto)}
+  .chip.manual{color:#fff;background:var(--manual)}
+
+  /* flow (vertical, print-friendly — no horizontal scroll) */
+  .flow-wrap{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+  .flow-v{display:flex;flex-direction:column;align-items:center;gap:0}
+  .vnode{width:100%;max-width:580px;display:flex;align-items:center;gap:12px;background:var(--surface-2);border:1px solid var(--line);border-left:4px solid var(--co);border-radius:11px;padding:11px 14px;break-inside:avoid}
+  .vseq{width:26px;height:26px;flex:0 0 auto;border-radius:50%;background:var(--co);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+  .vlabel{flex:1;font-size:14.5px;font-weight:700}
+  .vlabel .co{font-size:11px;font-weight:800;letter-spacing:.06em;color:var(--co);margin-right:7px}
+  .varrow{color:var(--line-strong);font-size:20px;line-height:1;margin:3px 0;user-select:none}
+
+  /* auto callout */
+  .auto-box{background:var(--auto-soft);border:1px solid color-mix(in srgb,var(--auto) 34%,transparent);border-left:4px solid var(--auto);border-radius:12px;padding:16px 18px}
+  .auto-box h3{margin:0 0 8px;font-size:15px;font-weight:800;color:var(--auto)}
+  .auto-box ol{margin:0;padding-left:20px} .auto-box li{margin:5px 0;font-size:14.5px}
+  .auto-box li b{color:var(--ink)}
+  .hint{margin-top:12px;font-size:13px;color:var(--muted)}
+
+  /* step cards */
+  .steps{display:flex;flex-direction:column;gap:14px}
+  .step{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--co);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px}
+  .step .top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+  .step .idx{width:30px;height:30px;border-radius:50%;background:var(--co);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+  .step h3{margin:0;font-size:16.5px;font-weight:750}
+  .co-badge{font-size:11px;font-weight:800;letter-spacing:.06em;color:#fff;background:var(--co);border-radius:6px;padding:2px 8px}
+  .step ol{margin:6px 0 0;padding-left:20px} .step li{margin:6px 0;font-size:14.5px;color:var(--ink)}
+  .path{display:inline-block;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;background:var(--surface-2);border:1px solid var(--line);border-radius:7px;padding:2px 8px;margin:2px 2px 2px 0}
+  .em{font-weight:800;color:var(--co)}
+  .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:11px}
+  .tag{font-size:12px;padding:4px 10px;border-radius:7px;border:1px solid var(--line);background:var(--surface-2)}
+  .tag.inv{color:var(--copper);background:var(--copper-soft);border-color:color-mix(in srgb,var(--copper) 30%,transparent)}
+  .tag .lbl{color:var(--faint);font-weight:700;margin-right:4px}
+  .midnote{background:var(--auto-soft);border:1px dashed color-mix(in srgb,var(--auto) 45%,transparent);border-radius:10px;padding:11px 14px;font-size:13.5px;color:var(--muted);margin:2px 0}
+  .midnote b{color:var(--ink)}
+
+  table.flow-t{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  table.flow-t th,table.flow-t td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+  table.flow-t thead th{background:var(--a);color:#fff;font-weight:700}
+  table.flow-t tbody tr:nth-child(even){background:var(--surface-2)}
+  .twrap{overflow-x:auto}
+
+  .key{margin-top:26px;background:var(--surface-2);border:1px solid var(--line);border-left:4px solid var(--copper);border-radius:12px;padding:16px 18px;font-size:14.5px}
+  .key b{color:var(--ink)}
+  footer{margin-top:38px;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px;color:var(--faint)}
+  @media (max-width:560px){.step .top{align-items:flex-start}}
+  @media print{
+    :root{--bg:#fff}
+    body{background:#fff}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .flow-wrap,.step,.auto-box,.key{box-shadow:none}
+    .vnode,.step,.auto-box,.midnote,table.flow-t tr{break-inside:avoid}
+    .sec-head{break-after:avoid}
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="doc">
+    <p class="eyebrow">操作手册 · 最新自动化流程</p>
+    <h1>B 销售订单确认后 —— 销售与库存操作流程</h1>
+    <p class="subtitle">当 B（惠州誉达）的销售订单确认后，系统会自动创建生产单并生成四张跨公司调拨草稿；操作员只需验证调拨、运行生产、发货。本手册按顺序说明每一步。</p>
+    <div class="meta">
+      <span><b>A</b>　ADAP.S ASIA · 接单/发货</span>
+      <span><b>B</b>　惠州誉达 · 五金厂/中转</span>
+      <span><b>C</b>　鼎盛电镀 · 生产/电镀</span>
+    </div>
+  </header>
+
+  <div class="legend">
+    <div><span class="chip auto">自动</span>系统自动完成</div>
+    <div><span class="chip manual">手动</span>操作员执行</div>
+    <div><span class="dot" style="background:var(--b)"></span>B 惠州誉达</div>
+    <div><span class="dot" style="background:var(--c)"></span>C 鼎盛电镀</div>
+    <div><span class="dot" style="background:var(--copper)"></span>库存变动</div>
+  </div>
+
+  <div class="sec-head"><span class="num">图</span><h2>流程总览</h2><span class="rule"></span></div>
+  <div class="flow-wrap"><div class="flow-v">
+    <div class="vnode" style="--co:var(--b)"><span class="vseq">1</span><div class="vlabel"><span class="co">B</span>确认销售订单</div></div>
+    <div class="varrow">↓</div>
+    <div class="vnode" style="--co:var(--c)"><span class="vseq">2</span><div class="vlabel"><span class="co">C</span>创建 + 确认 生产单 MO</div><span class="chip auto">自动</span></div>
+    <div class="varrow">↓</div>
+    <div class="vnode" style="--co:var(--b)"><span class="vseq">3</span><div class="vlabel"><span class="co">B→C</span>生成原料调拨草稿</div><span class="chip auto">自动</span></div>
+    <div class="varrow">↓</div>
+    <div class="vnode" style="--co:var(--b)"><span class="vseq">4</span><div class="vlabel"><span class="co">①</span>验证原料发运 B→C</div><span class="chip manual">手动</span></div>
+    <div class="varrow">↓</div>
+    <div class="vnode" style="--co:var(--c)"><span class="vseq">5</span><div class="vlabel"><span class="co">②</span>运行 MO 生产（标记完成）</div><span class="chip manual">手动</span></div>
+    <div class="varrow">↓</div>
+    <div class="vnode" style="--co:var(--c)"><span class="vseq">6</span><div class="vlabel"><span class="co">C→B</span>生成成品调拨草稿</div><span class="chip auto">自动</span></div>
+    <div class="varrow">↓</div>
+    <div class="vnode" style="--co:var(--c)"><span class="vseq">7</span><div class="vlabel"><span class="co">③</span>验证成品返运 C→B</div><span class="chip manual">手动</span></div>
+    <div class="varrow">↓</div>
+    <div class="vnode" style="--co:var(--b)"><span class="vseq">8</span><div class="vlabel"><span class="co">④</span>B 发货 + 送货单</div><span class="chip manual">手动</span></div>
+  </div></div>
+
+  <div class="sec-head"><span class="num">01</span><h2>系统自动完成（你无需操作）</h2><span class="rule"></span></div>
+  <div class="auto-box">
+    <h3>确认 B 的销售订单后，系统自动：</h3>
+    <ol>
+      <li>在 <b>C（鼎盛）</b>为每个有物料清单（BoM）的成品行 <b>创建生产单（MO）</b>。</li>
+      <li>该 MO <b>自动确认</b>。</li>
+      <li>自动生成两张 <b>原材料调拨草稿（B→C）</b>：「送往鼎盛 B→C」＋「收货自惠州誉达 C←B」。</li>
+      <li>自动 <b>取消</b> B 向 C 的冗余成品采购单（约 2 分钟内，由后台定时任务处理）——成品由 C 生产，而非采购。</li>
+    </ol>
+    <div class="hint">你会在 C 看到已确认的 MO，在 B/C 看到两张原材料草稿调拨单——都是自动生成的。</div>
+  </div>
+
+  <div class="sec-head"><span class="num">02</span><h2>手动操作步骤</h2><span class="rule"></span></div>
+  <div class="steps">
+
+    <div class="step" style="--co:var(--b)">
+      <div class="top"><div class="idx">1</div><h3>原材料发运 B → C</h3><span class="co-badge">B → C</span></div>
+      <ol>
+        <li><b>【公司 B】</b><span class="path">库存 → 送往鼎盛 B→C</span> 打开草稿 → <span class="em">验证</span>（原材料：惠州誉达/Stock → 公司间中转）。</li>
+        <li>右上角<b>切换到公司 C</b> → <span class="path">库存 → 收货自惠州誉达 C←B</span> 打开草稿 → <span class="em">验证</span>（中转 → 鼎盛/Stock）。</li>
+      </ol>
+      <div class="tags"><span class="tag inv"><span class="lbl">库存</span>B 出库原料</span><span class="tag inv"><span class="lbl">库存</span>C 入库原料</span></div>
+    </div>
+
+    <div class="step" style="--co:var(--c)">
+      <div class="top"><div class="idx">2</div><h3>C 生产（运行 MO）</h3><span class="co-badge">C</span></div>
+      <ol>
+        <li><b>【公司 C】</b><span class="path">制造 → 生产订单</span> 打开对应 MO（已"已确认"）。</li>
+        <li><span class="em">检查可用性</span>（预留刚收到的原材料）→ 生产 → <span class="em">标记完成</span>。扣减原料，成品入 鼎盛/Stock。（允许负库存，时间差不卡单。）</li>
+      </ol>
+      <div class="tags"><span class="tag inv"><span class="lbl">库存</span>扣原材</span><span class="tag inv"><span class="lbl">库存</span>成品入库</span></div>
+    </div>
+
+    <div class="midnote">✔ MO <b>标记完成</b>后，系统自动生成两张 <b>成品返运草稿（C→B）</b>：「送往惠州誉达 C→B」＋「收货自鼎盛 B←C」。</div>
+
+    <div class="step" style="--co:var(--c)">
+      <div class="top"><div class="idx">3</div><h3>成品返运 C → B</h3><span class="co-badge">C → B</span></div>
+      <ol>
+        <li><b>【公司 C】</b><span class="path">库存 → 送往惠州誉达 C→B</span> 打开草稿 → <span class="em">验证</span>（成品：鼎盛/Stock → 中转）。</li>
+        <li><b>切换到公司 B</b> → <span class="path">库存 → 收货自鼎盛 B←C</span> 打开草稿 → <span class="em">验证</span>（中转 → 惠州誉达/Stock）。</li>
+      </ol>
+      <div class="tags"><span class="tag inv"><span class="lbl">库存</span>C 出库成品</span><span class="tag inv"><span class="lbl">库存</span>B 入库成品</span></div>
+    </div>
+
+    <div class="step" style="--co:var(--b)">
+      <div class="top"><div class="idx">4</div><h3>B 向客户发货 ＋ 打印送货单</h3><span class="co-badge">B → 客户</span></div>
+      <ol>
+        <li><b>【公司 B】</b><span class="path">销售 → 订单</span> 打开该 SO → 交货（或 <span class="path">库存 → 交货</span>）→ 检查可用性 → <span class="em">验证</span>（成品 → 客户）。</li>
+        <li><b>打印送货单</b>：在交货单列表<b>勾选</b>（可勾选同一客户的多张交货单，<b>合并成一张送货单</b>）→ 打印 → 送货单。</li>
+      </ol>
+      <div class="tags"><span class="tag inv"><span class="lbl">库存</span>B 出库发货</span></div>
+    </div>
+
+  </div>
+
+  <div class="sec-head"><span class="num">03</span><h2>流程一览</h2><span class="rule"></span></div>
+  <div class="twrap"><table class="flow-t">
+    <thead><tr><th>环节</th><th>由谁</th><th>方式</th><th>单据</th></tr></thead>
+    <tbody>
+      <tr><td>创建并确认 MO</td><td>系统</td><td>自动</td><td>生产单（C）</td></tr>
+      <tr><td>原材料 B→C</td><td>系统建草稿 → 你验证</td><td>半自动</td><td>送往鼎盛 B→C ／ 收货自惠州誉达 C←B</td></tr>
+      <tr><td>生产</td><td>你</td><td>手动</td><td>生产单（标记完成）</td></tr>
+      <tr><td>成品 C→B</td><td>系统建草稿 → 你验证</td><td>半自动</td><td>送往惠州誉达 C→B ／ 收货自鼎盛 B←C</td></tr>
+      <tr><td>B 发货客户</td><td>你</td><td>手动</td><td>交货单 ＋ 送货单</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="key"><b>核心：</b>你只需做四件事——① 验证原材料 B→C　② 运行 MO　③ 验证成品 C→B　④ 验证 B 的发货并打印送货单。采购单、生产单、四张跨公司调拨单全部由系统自动生成为草稿。</div>
+
+  <footer>ADAP.S ASIA · B 销售订单确认后销售与库存操作流程 · A（ADAP.S）· B（惠州誉达）· C（鼎盛电镀）</footer>
+
+</div>
+</body></html>
