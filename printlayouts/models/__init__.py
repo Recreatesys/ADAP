@@ -12,3 +12,4 @@ from . import shipping_advise
 from . import customer_monthly_statement
 from . import adap_monthly_statement
 from . import account_receivable_report
+from . import ir_actions_actions
