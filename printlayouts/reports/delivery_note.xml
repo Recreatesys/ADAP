@@ -92,4 +92,56 @@
         <field name="paperformat_id" ref="paperformat_dn_a5_landscape"/>
     </record>
 
+    <!-- ===== Delivery Note (出库单): same layout/footer as 送货单, different table ===== -->
+    <template id="report_adap_delivery_out_document"><t t-call="web.html_container"><t t-set="o" t-value="o.with_context(lang=o._get_report_lang())"/><t t-set="company" t-value="o.company_id.sudo()"/><t t-set="partner" t-value="(o.move_ids and o.move_ids[0].partner_id) or o.partner_id or False"/><t t-set="custom_layout_address" t-value="False"/><t t-set="address" t-value="False"/><t t-set="information_block" t-value="False"/><t t-call="printlayouts.delivery_note_layout"><div class="page"><div class="text-center" style="margin-bottom:6px;">
+  <div style="font-size:18px;font-weight:bold;">誉达金属塑胶制品（惠州）有限公司</div>
+  <div style="font-size:26px;font-weight:bold;line-height:1.1;">出库单</div>
+</div><style>
+  table.adap-dn { border-collapse: collapse !important; width: 100%; font-size: 11px; }
+  table.adap-dn th, table.adap-dn td { border: 1px solid #000 !important; padding: 3px 4px; vertical-align: top; }
+  table.adap-dn thead th { background-color: #f2f2f2; text-align: center; }
+</style><div class="row mb-2" style="font-size:13px;">
+  <div class="col-6">
+    <div><strong>客户：</strong><span t-field="partner.commercial_partner_id.name"/></div>
+    <div><strong>地址：</strong><span t-out="partner" t-options="{'widget':'contact','fields':['address'],'no_marker':True}"/></div>
+    <div><strong>联系人／电话：</strong><span t-field="partner.name"/> / <span t-field="partner.phone"/></div>
+  </div>
+  <div class="col-6">
+    <div><strong>客户编号：</strong><span t-field="partner.commercial_partner_id.company_registry"/></div>
+    <div><strong>交货日期：</strong><span t-out="o.date_done or o.scheduled_date" t-options="{'widget':'date'}"/></div>
+    <div><strong>出库单号：</strong><span t-field="o.name"/></div>
+  </div>
+</div><table class="adap-dn">
+  <thead><tr>
+    <th>产品名称</th><th class="text-end">件数</th><th class="text-end">重量／箱</th>
+    <th class="text-end">总净量（KG）</th><th class="text-end">数量／箱</th>
+    <th class="text-end">总数量</th><th>备註</th>
+  </tr></thead>
+  <tbody>
+    <tr t-foreach="o.move_ids.filtered(lambda l: l.product_uom_qty)" t-as="move">
+      <td><span t-out="move.product_id.default_code or move.product_id.name"/></td>
+      <td class="text-end"><span t-if="move.cartons" t-out="move.cartons"/></td>
+      <td class="text-end"><span t-out="'%.2f' % (move.product_id.x_net_weight_per_box or 0.0)"/></td>
+      <td class="text-end"><span t-out="'%.2f' % ((move.cartons or 0) * (move.product_id.x_net_weight_per_box or 0.0))"/></td>
+      <td class="text-end"><span t-if="move.product_id.x_pcs_per_box" t-out="move.product_id.x_pcs_per_box"/></td>
+      <td class="text-end"><span t-field="move.quantity"/></td>
+      <td><span t-out="move.x_dn_remark or ''"/></td>
+    </tr>
+  </tbody>
+</table></div></t></t></template>
+
+    <template id="report_adap_delivery_out"><t t-foreach="docs" t-as="o"><t t-call="printlayouts.report_adap_delivery_out_document" t-lang="o._get_report_lang()"/></t></template>
+
+    <record id="action_adap_delivery_out" model="ir.actions.report">
+        <field name="name">Delivery Note (出库单)</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">printlayouts.report_adap_delivery_out</field>
+        <field name="report_file">printlayouts.report_adap_delivery_out</field>
+        <field name="print_report_name">'出库单 - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_dn_a5_landscape"/>
+    </record>
+
 </odoo>
