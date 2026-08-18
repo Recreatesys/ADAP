@@ -63,7 +63,7 @@
   </tr></thead>
   <tbody>
     <tr t-foreach="pickings.move_ids.filtered(lambda l: l.product_uom_qty)" t-as="move">
-      <td><span t-out="move.sale_line_id.order_id.client_order_ref"/></td>
+      <td><span t-out="move.sale_line_id.order_id.client_order_ref or move.picking_id.origin"/></td>
       <td><span t-out="move.product_id.default_code"/></td>
       <td><span t-out="move.sale_line_id.x_studio_ if move.sale_line_id else ''"/></td>
       <td><span t-if="move.cartons" t-out="move.cartons"/></td>
