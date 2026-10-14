@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_picking_form_refulfill" model="ir.ui.view">
+        <field name="name">stock.picking.form.refulfill</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button" icon="fa-refresh" type="object"
+                        name="action_view_refulfill" invisible="x_refulfill_count == 0">
+                    <field name="x_refulfill_count" widget="statinfo" string="重新履行"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

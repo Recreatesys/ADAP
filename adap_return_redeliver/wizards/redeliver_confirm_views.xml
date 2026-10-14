@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="adap_redeliver_confirm_form" model="ir.ui.view">
+        <field name="name">adap.redeliver.confirm.form</field>
+        <field name="model">adap.redeliver.confirm</field>
+        <field name="arch" type="xml">
+            <form string="重新生成交货单">
+                <field name="picking_id" invisible="1"/>
+                <field name="sale_order_id" invisible="1"/>
+                <div class="text-center mt8 mb8">
+                    <p>此退货后，销售订单仍有未交付数量。</p>
+                    <p><strong>是否生成新的交货单以重新履行订单？</strong></p>
+                </div>
+                <footer>
+                    <button name="action_yes" string="是，生成交货单" type="object" class="btn-primary"/>
+                    <button name="action_no" string="否" type="object" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
