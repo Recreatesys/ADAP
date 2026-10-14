@@ -62,7 +62,7 @@
     <th>单位</th><th>表面</th><th>备注</th>
   </tr></thead>
   <tbody>
-    <tr t-foreach="pickings.move_ids.filtered(lambda l: l.product_uom_qty)" t-as="move">
+    <tr t-foreach="pickings.move_ids.filtered(lambda l: l.quantity)" t-as="move">
       <td><span t-out="move.sale_line_id.order_id.client_order_ref or move.picking_id.origin"/></td>
       <td><span t-out="move.product_id.default_code"/></td>
       <td><span t-out="move.sale_line_id.x_studio_ if move.sale_line_id else ''"/></td>
@@ -121,8 +121,8 @@
     <tr t-foreach="o.move_ids.filtered(lambda l: l.product_uom_qty)" t-as="move">
       <td><span t-out="move.product_id.default_code or move.product_id.name"/></td>
       <td class="text-end"><span t-if="move.cartons" t-out="move.cartons"/></td>
-      <td class="text-end"><span t-out="'%.2f' % (move.product_id.x_net_weight_per_box or 0.0)"/></td>
-      <td class="text-end"><span t-out="'%.2f' % ((move.cartons or 0) * (move.product_id.x_net_weight_per_box or 0.0))"/></td>
+      <td class="text-end"><span t-out="'%.5f' % (move.product_id.x_net_weight_per_box or 0.0)"/></td>
+      <td class="text-end"><span t-out="'%.5f' % ((move.cartons or 0) * (move.product_id.x_net_weight_per_box or 0.0))"/></td>
       <td class="text-end"><span t-if="move.product_id.x_pcs_per_box" t-out="move.product_id.x_pcs_per_box"/></td>
       <td class="text-end"><span t-field="move.quantity"/></td>
       <td><span t-out="move.x_dn_remark or ''"/></td>
