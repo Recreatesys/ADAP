@@ -12,7 +12,7 @@ Company A keeps its S sequence. Company/partner ids are fixed for this database
 group: A=1, B=2, C=3.
 """,
     "author": "ADAP.S",
-    "version": "18.0.1.0.0",
+    "version": "18.0.2.0.0",
     "depends": ["sale_purchase_inter_company_rules"],
     "data": [
         "data/sequence.xml",

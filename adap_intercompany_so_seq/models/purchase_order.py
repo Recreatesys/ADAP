@@ -26,6 +26,9 @@ class PurchaseOrder(models.Model):
             cname = self.env["ir.sequence"].sudo().next_by_code("adap.sale.order.c")
             if cname:
                 vals["name"] = cname
+        # Carry the PO remark (Terms & Conditions / notes) onto the inter-company SO.
+        if self.notes:
+            vals["note"] = self.notes
         return vals
 
     def _adap_b_mirror_name(self):
