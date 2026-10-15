@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Warning on the sale-order list when the source A PO remark was updated -->
+    <record id="view_sale_order_tree_po_remark" model="ir.ui.view">
+        <field name="name">sale.order.list.po.remark.warn</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="attributes">
+                <attribute name="decoration-warning">x_po_remark_updated</attribute>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="x_po_remark_updated" column_invisible="1"/>
+                <field name="x_po_remark_warn" string="⚠" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Acknowledge action in the sale-order list Actions menu (clears the warning) -->
+    <record id="action_ack_po_remark" model="ir.actions.server">
+        <field name="name">标记备注已阅 (Remark reviewed)</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">records.action_adap_ack_po_remark()</field>
+    </record>
+</odoo>

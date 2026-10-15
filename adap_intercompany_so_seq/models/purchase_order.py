@@ -10,6 +10,21 @@ COMPANY_C = 3
 class PurchaseOrder(models.Model):
     _inherit = "purchase.order"
 
+    def write(self, vals):
+        res = super().write(vals)
+        # Live-sync the PO remark to the already-created inter-company B SO (A->B
+        # only), and flag the SO so the sale-order list shows a warning icon.
+        if "notes" in vals:
+            SO = self.env["sale.order"].sudo()
+            for po in self:
+                so = SO.search([
+                    ("auto_purchase_order_id", "=", po.id),
+                    ("company_id", "=", COMPANY_B),
+                ], limit=1)
+                if so and so.note != po.notes:
+                    so.write({"note": po.notes or False, "x_po_remark_updated": True})
+        return res
+
     def _prepare_sale_order_data(self, name, partner, company, direct_delivery_address):
         # `company` is the TARGET company the inter-company SO is created in;
         # `self` is the source purchase order.
